@@ -1,0 +1,15 @@
+.img-message-list-size {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+#message-element:hover {
+    background-color: #E4A11B !important;
+    cursor: pointer !important;
+}
+
+#message-element:not(:hover) {
+    background-color: #14A44D !important;
+    cursor: default !important;
+}

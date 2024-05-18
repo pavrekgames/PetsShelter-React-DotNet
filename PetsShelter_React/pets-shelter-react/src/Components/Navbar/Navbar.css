@@ -1,0 +1,18 @@
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-image: none !important;
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #E4A11B !important;
+}
+
+/*.dropdown-menu > li > button:hover, .dropdown-menu > li > button:focus {
+    background-color: #E4A11B;
+  } */
+
+.dropdown-menu>div>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #E4A11B;
+}

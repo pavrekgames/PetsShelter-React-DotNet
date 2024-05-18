@@ -1,0 +1,46 @@
+.vh-100 {
+  min-height: 150vh;
+}
+
+.vw-30 {
+  min-width: 30vw;
+}
+
+.paginator{
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: white !important;
+    display: flex;
+    list-style: none;
+    gap: 4px;
+  }
+  
+  .paginator a{
+    border-radius: 4px;
+    padding: 3px;
+    margin: 3px;
+    color: white !important;
+  }
+  
+  .paginator a:hover{
+    padding: 5px;
+    margin: 3px;
+    background: #E4A11B;
+    color: white !important;
+  }
+  
+  .paginator-active{
+    background: #6a994e;
+    border-radius: 4px;
+  }
+  
+  .paginator-active a:hover{
+    background: #6a994e !important;
+    padding: 5px !important;
+    margin: 3px !important;
+    border-radius: 4px !important;
+  }
+  
+  .paginator-disabled{
+    color: aqua;
+  }
