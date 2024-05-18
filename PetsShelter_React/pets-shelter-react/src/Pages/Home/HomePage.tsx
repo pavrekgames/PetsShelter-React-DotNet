@@ -11,7 +11,7 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    api.get("pets").then((res) => {
+    api.get("newest-pets").then((res) => {
       setPets(res.data);
       setTimeout(() => {
         setIsLoading(false);

@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DotNetApi.Controllers
 {
     [ApiController]
-    [Route("api/pets")]
+    [Route("api/")]
     public class PetController : ControllerBase
     {
 
@@ -26,6 +26,16 @@ namespace DotNetApi.Controllers
             this.context = context;
             this.petRepository = petRepository;
             this.logger = logger;
+        }
+
+        [HttpGet("newest-pets")]
+        public async Task<IActionResult> GetNewestPets()
+        {
+
+            var pets = await context.Pets.OrderByDescending(x => x.Id).Take(3).OrderBy(x => x.Id).ToListAsync();
+            var petsDto = pets.Select(s => s.ToPetDto());
+
+            return Ok(pets);
         }
 
         [HttpGet]
