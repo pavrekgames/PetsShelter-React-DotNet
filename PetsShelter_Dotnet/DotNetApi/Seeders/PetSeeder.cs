@@ -48,7 +48,8 @@ namespace DotNetApi.Seeders
                     Species = "Kot",
                     Race = "Domowy",
                     Size = "Mały",
-                    Description= "",
+                    Description = "",
+                    Photo_Path = "sss",
                     User_Id = "sss",
                 },
                  new Pet()
@@ -58,6 +59,7 @@ namespace DotNetApi.Seeders
                     Race = "Kundel",
                     Size = "średni",
                     Description= "Piesek",
+                    Photo_Path = "ddd",
                     User_Id = "ddd",
                 },
                  new Pet()
@@ -67,6 +69,7 @@ namespace DotNetApi.Seeders
                     Race = "Arab",
                     Size = "Duży",
                     Description= "",
+                    Photo_Path = "eee",
                     User_Id = "sss",
                 },
                   new Pet()
@@ -76,6 +79,7 @@ namespace DotNetApi.Seeders
                     Race = "Jamnik",
                     Size = "Mały",
                     Description= "",
+                    Photo_Path = "ggg",
                     User_Id = "ccc",
                 },
                   new Pet()
@@ -85,6 +89,7 @@ namespace DotNetApi.Seeders
                     Race = "Brytyjski",
                     Size = "Mały",
                     Description= "",
+                    Photo_Path = "kkk",
                     User_Id = "ddd",
                 },
             };
