@@ -38,10 +38,10 @@ namespace DotNetApi.Controllers
             return Ok(pets);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPets([FromQuery] QueryObject query)
+        [HttpGet("pets-to-adopt")]
+        public async Task<IActionResult> GetPets()
         {
-            var pets = await petRepository.GetPetsAsync(query);
+            var pets = await context.Pets.ToListAsync();
             var petDto = pets.Select(s => s.ToPetDto());
 
             return Ok(pets);
