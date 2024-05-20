@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DotNetApi.Controllers
 {
     [ApiController]
-    [Route("api/account")]
+    [Route("api/")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> userManager;
@@ -27,7 +27,7 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        public async Task<IActionResult> Register([FromForm] RegisterDto registerDto)
         {
 
             try

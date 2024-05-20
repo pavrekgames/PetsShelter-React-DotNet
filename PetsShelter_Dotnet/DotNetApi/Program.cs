@@ -31,8 +31,11 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
 });
 
 builder.Services.AddIdentity<User, IdentityRole>(options => {
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
     options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
 })
 .AddEntityFrameworkStores<ApplicationDBContext>();
 
@@ -82,7 +85,7 @@ app.UseCors(x => x
 .AllowAnyMethod()
 .AllowAnyHeader()
 .AllowCredentials()
-//.WithOrigins("http://localhost:8888")
+.WithOrigins("http://localhost:3000")
 .SetIsOriginAllowed(origin => true));
 
 

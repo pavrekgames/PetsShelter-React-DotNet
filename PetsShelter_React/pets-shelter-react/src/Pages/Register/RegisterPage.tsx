@@ -53,8 +53,19 @@ const RegisterPage = (props: Props) => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema), mode: "all" });
 
+  const createForm = () => {
+    const formData = new FormData();
+    formData.append("name", getValues("name"));
+    formData.append("surname", getValues("surname"));
+    formData.append("email", getValues("email"));
+    formData.append("userName", getValues("email"));
+    formData.append("password", getValues("password"));
+
+    return formData;
+  }
+
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    const formData = getValues();
+    const formData = createForm();
     
     api.post("register", formData).then((res) => {
       console.log(res);
