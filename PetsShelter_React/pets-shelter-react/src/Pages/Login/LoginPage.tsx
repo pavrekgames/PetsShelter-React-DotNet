@@ -52,7 +52,7 @@ const LoginPage = (props: Props) => {
         console.log(res);
         alertify.success("Zostałeś zalogowany");
         navigate("/");
-        dispatch(setToken(res.data.access_token));
+        dispatch(setToken(res.data.token));
         dispatch(logIn());
         setIsLoading(false);
       })

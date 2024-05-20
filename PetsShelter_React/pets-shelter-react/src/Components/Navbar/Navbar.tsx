@@ -45,7 +45,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      checkTokenExpired();
+      //checkTokenExpired();
     }
   });
 
