@@ -106,9 +106,6 @@ namespace DotNetApi.Controllers
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
 
-            if(authorizedUser == null){
-                return BadRequest("Brak usera");
-            }
             var user = new AuthorizedUserDto
                 {
                     Id = authorizedUser.Id,
