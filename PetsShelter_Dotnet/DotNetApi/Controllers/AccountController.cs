@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DotNetApi.Dtos.Account;
+using DotNetApi.Extensions;
 using DotNetApi.Interfaces;
 using DotNetApi.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -101,18 +103,23 @@ namespace DotNetApi.Controllers
         [Authorize]
         public async Task<IActionResult> Me(){
 
-            var authorizedUser = await userManager.GetUserAsync(User);
+            var userName = User.GetUserName();
+            var authorizedUser = await userManager.FindByNameAsync(userName);
 
-           /* var user = new AuthorizedUserDto
+            if(authorizedUser == null){
+                return BadRequest("Brak usera");
+            }
+            var user = new AuthorizedUserDto
                 {
                     Id = authorizedUser.Id,
                     Name = authorizedUser.Name,
                     Surname = authorizedUser.Surname,
                     Email = authorizedUser.Email,
-                    Role = authorizedUser.
-                }; */
+                    Role = authorizedUser.Role,
+                    Tokens_Count = authorizedUser.TokensCount
+                }; 
 
-            return Ok();
+            return Ok(user);
         }
 
     }

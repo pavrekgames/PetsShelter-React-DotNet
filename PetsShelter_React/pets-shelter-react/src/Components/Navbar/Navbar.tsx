@@ -45,7 +45,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      //checkTokenExpired();
+      checkTokenExpired();
     }
   });
 
@@ -69,7 +69,7 @@ const Navbar = () => {
         logout();
       } else {
         checkAuthorizedUser();
-        getMessagesCount();
+        //getMessagesCount();
       }
     }
   };
