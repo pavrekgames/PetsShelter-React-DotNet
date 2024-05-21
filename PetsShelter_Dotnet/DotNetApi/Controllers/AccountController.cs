@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DotNetApi.Dtos.Account;
 using DotNetApi.Interfaces;
 using DotNetApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -94,6 +95,24 @@ namespace DotNetApi.Controllers
                     Token = tokenService.CreateToken(user)
                 }
             );
+        }
+
+        [HttpPost("me")]
+        [Authorize]
+        public async Task<IActionResult> Me(){
+
+            var authorizedUser = await userManager.GetUserAsync(User);
+
+           /* var user = new AuthorizedUserDto
+                {
+                    Id = authorizedUser.Id,
+                    Name = authorizedUser.Name,
+                    Surname = authorizedUser.Surname,
+                    Email = authorizedUser.Email,
+                    Role = authorizedUser.
+                }; */
+
+            return Ok();
         }
 
     }
