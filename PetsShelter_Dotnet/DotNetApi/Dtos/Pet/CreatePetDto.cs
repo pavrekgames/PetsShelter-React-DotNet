@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetApi.Interfaces;
 
 namespace DotNetApi.Dtos.Pet
 {
-    public class CreatePetDto
+    public class CreatePetDto : IPhoto
     {
         [Required(ErrorMessage ="Imię jest wymagane")]
         [MinLength(3, ErrorMessage ="Imię musi mieć minimum 3 znaki")]
@@ -21,6 +22,11 @@ namespace DotNetApi.Dtos.Pet
         [Required(ErrorMessage ="Zdjęcie jest wymagane")]
         public IFormFile Photo { get; set; }
         [Required]
-        public string User_Id { get; set; } = string.Empty; 
+        public string User_Id { get; set; } = string.Empty;
+
+        public IFormFile GetPhoto()
+        {
+            return Photo;
+        }
     }
 }

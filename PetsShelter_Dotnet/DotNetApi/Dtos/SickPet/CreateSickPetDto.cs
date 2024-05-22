@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetApi.Interfaces;
 
 namespace DotNetApi.Dtos.SickPet
 {
-    public class CreateSickPetDto
+    public class CreateSickPetDto : IPhoto 
     {
 
         [Required(ErrorMessage ="Imię jest wymagane")]
@@ -22,5 +23,10 @@ namespace DotNetApi.Dtos.SickPet
         public int RequiredTokens {get; set;} = 1;
         [Required(ErrorMessage ="Zdjęcie jest wymagane")]
         public IFormFile Photo { get; set; }
+
+       public IFormFile GetPhoto()
+        {
+            return Photo;
+        }
     }
 }
