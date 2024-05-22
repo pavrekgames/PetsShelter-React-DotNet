@@ -9,7 +9,7 @@ namespace DotNetApi.Mappers
 {
     public static class SickPetMappers
     {
-         public static SickPetDto ToSickPetDto(this SickPet pet)
+        public static SickPetDto ToSickPetDto(this SickPet pet)
         {
             return new SickPetDto
             {
@@ -24,9 +24,10 @@ namespace DotNetApi.Mappers
             };
         }
 
-        public static SickPet ToPetFromCreateDto(this CreateSickPetDto createSickPetDto, string photoPath)
+        public static SickPet ToSickPetFromCreateDto(this CreateSickPetDto createSickPetDto, string photoPath)
         {
-            return new SickPet{
+            return new SickPet
+            {
                 Name = createSickPetDto.Name,
                 Species = createSickPetDto.Species,
                 Disease = createSickPetDto.Disease,

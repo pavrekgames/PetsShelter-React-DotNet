@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DotNetApi.Data;
 using DotNetApi.Dtos.SickPet;
 using DotNetApi.Interfaces;
+using DotNetApi.Mappers;
+using DotNetApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetApi.Controllers
@@ -14,35 +16,52 @@ namespace DotNetApi.Controllers
     public class SickPetController : ControllerBase
     {
         private readonly ApplicationDBContext context;
+
+        private readonly ISickPetRepository sickPetRepository;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IFilesService filesService;
 
-        public SickPetController(ApplicationDBContext context, IWebHostEnvironment webHostEnvironment, IFilesService filesService)
+        public SickPetController(ApplicationDBContext context, ISickPetRepository sickPetRepository, IWebHostEnvironment webHostEnvironment, IFilesService filesService)
         {
             this.context = context;
+            this.sickPetRepository = sickPetRepository;
             this.webHostEnvironment = webHostEnvironment;
             this.filesService = filesService;
         }
 
         [HttpGet("sick-pets")]
-        public async Task<IActionResult> GetNewestPets()
+        public async Task<IActionResult> GetSickPets()
         {
+            var pets = await sickPetRepository.GetSickPetsAsync();
 
-            
-
-            return Ok();
+            return Ok(pets);
         }
 
-         [HttpPost("add-sick-pet")]
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetSickPetById([FromRoute] int id)
+        {
+            var pet = await sickPetRepository.GetSickPetByIdAsync(id);
+
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pet);
+        }
+
+        [HttpPost("add-sick-pet")]
         public async Task<IActionResult> Create([FromForm] CreateSickPetDto petDto)
         {
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
 
-            
-           
-            return Ok();
+            var pet = petDto.ToSickPetFromCreateDto(photoUrlPath);
+
+            await sickPetRepository.CreateAsync(pet);
+
+            return CreatedAtAction(nameof(GetSickPetById), new { id = pet.Id }, pet.ToSickPetDto());
         }
 
 
