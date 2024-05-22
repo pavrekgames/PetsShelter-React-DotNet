@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetApi.Dtos.SickPet;
 using DotNetApi.Models;
 
 namespace DotNetApi.Interfaces
@@ -10,8 +11,8 @@ namespace DotNetApi.Interfaces
     {
         Task<List<SickPet>> GetSickPetsAsync();
         Task<SickPet?> GetSickPetByIdAsync(int id);
-        Task<SickPet> CreateAsync(Pet pet);
-        //Task<SickPet?> UpdateAsync(int id, UpdatePetDto petDto);
+        Task<SickPet> CreateAsync(SickPet pet);
+        Task<SickPet?> UpdateAsync(int id, UpdateSickPetDto petDto);
         Task<SickPet?> DeleteAsync(int id);
     }
 }

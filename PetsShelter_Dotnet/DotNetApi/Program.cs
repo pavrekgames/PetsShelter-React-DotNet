@@ -63,6 +63,7 @@ builder.Services.AddAuthentication(options => {
 
 
 builder.Services.AddScoped<IPetRepository, PetRepository>();
+builder.Services.AddScoped<ISickPetRepository, SickPetRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
