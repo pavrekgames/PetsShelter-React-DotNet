@@ -23,13 +23,15 @@ namespace DotNetApi.Controllers
         private readonly IPetRepository petRepository;
         private readonly ILogger<PetController> logger;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IFilesService filesService;
 
-        public PetController(ApplicationDBContext context, IPetRepository petRepository, ILogger<PetController> logger, IWebHostEnvironment webHostEnvironment)
+        public PetController(ApplicationDBContext context, IPetRepository petRepository, ILogger<PetController> logger, IWebHostEnvironment webHostEnvironment, IFilesService filesService)
         {
             this.context = context;
             this.petRepository = petRepository;
             this.logger = logger;
             this.webHostEnvironment = webHostEnvironment;
+            this.filesService = filesService;
         }
 
         [HttpGet("newest-pets")]
@@ -68,12 +70,7 @@ namespace DotNetApi.Controllers
         public async Task<IActionResult> Create([FromForm] CreatePetDto petDto)
         {
 
-            string extention = Path.GetExtension(petDto.Photo.FileName);
-            string photoName = Guid.NewGuid().ToString() + extention;
-            string photoPath = Path.Combine(webHostEnvironment.ContentRootPath, "Storage", photoName);
-            
-            using FileStream stream = new FileStream(photoPath, FileMode.Create);
-            petDto.Photo.CopyTo(stream);
+            string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
 
