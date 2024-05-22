@@ -64,7 +64,7 @@ namespace DotNetApi.Controllers
             return Ok(pet);
         }
 
-        [HttpPost]
+        [HttpPost("add-pet")]
         public async Task<IActionResult> Create([FromForm] CreatePetDto petDto)
         {
 
