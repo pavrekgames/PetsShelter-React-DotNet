@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240521071101_Add_Role_Column_in_Users_Table")]
-    partial class AddRoleColumninUsersTable
+    [Migration("20240522114833_Create_SickPets_Table")]
+    partial class CreateSickPetsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace DotNetApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -66,6 +65,45 @@ namespace DotNetApi.Migrations
                     b.HasIndex("User_Id");
 
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("DotNetApi.Models.SickPet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentTokens")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Disease")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequiredTokens")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SickPets");
                 });
 
             modelBuilder.Entity("DotNetApi.Models.User", b =>
@@ -192,13 +230,13 @@ namespace DotNetApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "015344c0-d06b-4be7-a630-1c206ab3f7ec",
+                            Id = "c16c3f28-de21-49dd-90ee-453908d4e3f1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "687b3420-c3d2-4207-9b9d-d2436b434223",
+                            Id = "ac026cdf-48dc-466d-ba5c-5536a5830f3e",
                             Name = "User",
                             NormalizedName = "USER"
                         });

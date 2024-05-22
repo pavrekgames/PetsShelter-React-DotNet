@@ -20,6 +20,7 @@ namespace DotNetApi.Data
 
         public DbSet<Pet> Pets { get; set; }
         public DbSet<UserPet> UserPets { get; set; }
+        public DbSet<SickPet> SickPets {get; set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

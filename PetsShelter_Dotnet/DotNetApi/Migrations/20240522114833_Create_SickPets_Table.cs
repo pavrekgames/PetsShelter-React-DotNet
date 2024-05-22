@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DotNetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedPets : Migration
+    public partial class CreateSickPetsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +34,7 @@ namespace DotNetApi.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TokensCount = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -53,6 +54,25 @@ namespace DotNetApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SickPets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Species = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Disease = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentTokens = table.Column<int>(type: "int", nullable: false),
+                    RequiredTokens = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SickPets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,7 +191,8 @@ namespace DotNetApi.Migrations
                     Species = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPath = table.Column<string>(name: "Photo_Path", type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(name: "User_Id", type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -212,8 +233,8 @@ namespace DotNetApi.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "63fe4650-6b98-491b-a516-645801707e4d", null, "User", "USER" },
-                    { "b02b78eb-0a70-4126-9700-50251850d328", null, "Admin", "ADMIN" }
+                    { "ac026cdf-48dc-466d-ba5c-5536a5830f3e", null, "User", "USER" },
+                    { "c16c3f28-de21-49dd-90ee-453908d4e3f1", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -283,6 +304,9 @@ namespace DotNetApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "SickPets");
 
             migrationBuilder.DropTable(
                 name: "UserPets");

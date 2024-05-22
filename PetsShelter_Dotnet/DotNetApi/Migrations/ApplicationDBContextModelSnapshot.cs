@@ -64,6 +64,45 @@ namespace DotNetApi.Migrations
                     b.ToTable("Pets");
                 });
 
+            modelBuilder.Entity("DotNetApi.Models.SickPet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentTokens")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Disease")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequiredTokens")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SickPets");
+                });
+
             modelBuilder.Entity("DotNetApi.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -188,13 +227,13 @@ namespace DotNetApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0a7529b4-2096-4cee-832f-8efeaf455f00",
+                            Id = "c16c3f28-de21-49dd-90ee-453908d4e3f1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "008b7d61-3311-4452-8a3d-473aebf99e9a",
+                            Id = "ac026cdf-48dc-466d-ba5c-5536a5830f3e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
