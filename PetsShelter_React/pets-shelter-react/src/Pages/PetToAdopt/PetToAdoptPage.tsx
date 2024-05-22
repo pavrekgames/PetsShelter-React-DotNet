@@ -98,7 +98,7 @@ const PetToAdoptPage = (props: Props) => {
       <div className="mx-auto row px-7 app-background text-light justify-content-center pb-2">
         <div className="col-auto p-2">
           <div className="justify-content-center">
-            <img src={pet?.photo_path} alt="Pet" className="img-size-pet" />
+            <img src={pet?.photo_Path} alt="Pet" className="img-size-pet" />
           </div>
 
           <div className="text-center text-warning p-2">

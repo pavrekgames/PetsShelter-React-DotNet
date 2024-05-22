@@ -17,9 +17,9 @@ namespace DotNetApi.Dtos.Pet
         public string Race { get; set; } = string.Empty;
         [Required(ErrorMessage ="Rozmiar jest wymagany")]
         public string Size { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public string Photo_Path { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
+        [Required(ErrorMessage ="Zdjęcie jest wymagane")]
+        public IFormFile Photo { get; set; }
         [Required]
         public string User_Id { get; set; } = string.Empty; 
     }

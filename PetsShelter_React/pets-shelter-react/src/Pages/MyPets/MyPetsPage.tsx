@@ -90,7 +90,7 @@ const MyPetsPage = (props: Props) => {
                   <th scope="row">{index + 1}</th>
                   <td>
                     <img
-                      src={pet.photo_path}
+                      src={pet.photo_Path}
                       alt="Pet"
                       className="img-size-my-pet"
                     />

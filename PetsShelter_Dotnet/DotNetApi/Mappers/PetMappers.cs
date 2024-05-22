@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using DotNetApi.Dtos.Pet;
 using DotNetApi.Models;
 
@@ -23,7 +24,7 @@ namespace DotNetApi.Mappers
             };
         }
 
-        public static Pet ToPetFromCreateDto(this CreatePetDto createPetDto)
+        public static Pet ToPetFromCreateDto(this CreatePetDto createPetDto, string photoPath)
         {
             return new Pet{
                 Name = createPetDto.Name,
@@ -31,6 +32,7 @@ namespace DotNetApi.Mappers
                 Race = createPetDto.Race,
                 Size = createPetDto.Size,
                 Description = createPetDto.Description,
+                Photo_Path = photoPath,
                 User_Id = createPetDto.User_Id
             };
         }

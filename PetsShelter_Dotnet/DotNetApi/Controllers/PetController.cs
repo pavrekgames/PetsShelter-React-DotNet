@@ -7,8 +7,10 @@ using DotNetApi.Dtos.Pet;
 using DotNetApi.Helpers;
 using DotNetApi.Interfaces;
 using DotNetApi.Mappers;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace DotNetApi.Controllers
 {
@@ -20,12 +22,14 @@ namespace DotNetApi.Controllers
         private readonly ApplicationDBContext context;
         private readonly IPetRepository petRepository;
         private readonly ILogger<PetController> logger;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public PetController(ApplicationDBContext context, IPetRepository petRepository, ILogger<PetController> logger)
+        public PetController(ApplicationDBContext context, IPetRepository petRepository, ILogger<PetController> logger, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
             this.petRepository = petRepository;
             this.logger = logger;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet("newest-pets")]
@@ -61,9 +65,19 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreatePetDto petDto)
+        public async Task<IActionResult> Create([FromForm] CreatePetDto petDto)
         {
-            var pet = petDto.ToPetFromCreateDto();
+
+            string extention = Path.GetExtension(petDto.Photo.FileName);
+            string photoName = Guid.NewGuid().ToString() + extention;
+            string photoPath = Path.Combine(webHostEnvironment.ContentRootPath, "Storage", photoName);
+            
+            using FileStream stream = new FileStream(photoPath, FileMode.Create);
+            petDto.Photo.CopyTo(stream);
+
+            string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
+
+            var pet = petDto.ToPetFromCreateDto(photoUrlPath);
 
             await petRepository.CreateAsync(pet);
 

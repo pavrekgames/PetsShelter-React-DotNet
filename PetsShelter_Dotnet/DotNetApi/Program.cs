@@ -8,6 +8,7 @@ using DotNetApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
 using NLog.Web;
@@ -88,6 +89,11 @@ app.UseCors(x => x
 .WithOrigins("http://localhost:3000")
 .SetIsOriginAllowed(origin => true));
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Storage")),
+    RequestPath = "/Storage"
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
