@@ -39,6 +39,8 @@ namespace DotNetApi.Controllers
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
+
+            
            
             return Ok();
         }
