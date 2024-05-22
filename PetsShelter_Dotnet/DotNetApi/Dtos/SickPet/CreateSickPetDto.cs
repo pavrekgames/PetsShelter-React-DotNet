@@ -21,6 +21,6 @@ namespace DotNetApi.Dtos.SickPet
         [MinLength(1, ErrorMessage ="Minimalna llość wymaganych żetonów to 1")]
         public int RequiredTokens {get; set;} = 1;
         [Required(ErrorMessage ="Zdjęcie jest wymagane")]
-        public string PhotoPath { get; set; } = string.Empty;
+        public IFormFile Photo { get; set; }
     }
 }
