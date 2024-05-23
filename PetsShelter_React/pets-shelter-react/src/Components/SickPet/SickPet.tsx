@@ -11,7 +11,7 @@ const SickPet = ({ pet }: { pet: SickPetModel }) => {
   return (
     <div className="mx-auto row px-7 app-background text-light justify-content-center pb-2 ">
       <div className="col-3 theme-bgr p-2 border-start border-top border-bottom border-warning border-3">
-        <img src={pet.photo_path} alt="Pet" className="img-size" />
+        <img src={pet.photoPath} alt="Pet" className="img-size" />
       </div>
 
       <div className="col-6 theme-bgr p-2 border border-warning border-3">
