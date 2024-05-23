@@ -53,7 +53,7 @@ namespace DotNetApi.Controllers
             return Ok(pets);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("pets-to-adopt/{id:int}")]
         public async Task<IActionResult> GetPetById([FromRoute] int id)
         {
             var pet = await petRepository.GetByIdAsync(id);
