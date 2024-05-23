@@ -137,7 +137,8 @@ namespace DotNetApi.Controllers
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
 
-            var pets = await context.Pets.Where(p => p.User_Id == "26c8254f-3f6d-4efc-b9f3-703a086f14f5").ToListAsync();
+            var pets = await context.Pets.Where(p => p.User_Id == authorizedUser.Id).ToListAsync();
+            var petDto = pets.Select(s => s.ToPetDto());
 
             return Ok(pets);
 

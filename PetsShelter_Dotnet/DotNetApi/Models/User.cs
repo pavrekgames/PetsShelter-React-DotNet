@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,7 +15,9 @@ namespace DotNetApi.Models
     public string Surname { get; set; } = string.Empty;
     public string Role { get; set; } = "user";
     public int TokensCount { get; set; } = 0;
+    [JsonIgnore]
     public List<Pet> Pets { get; set; } = new List<Pet>();
+    [JsonIgnore]
     public List<UserPet> UserPets { get; set; } = new List<UserPet>();
   }
 }

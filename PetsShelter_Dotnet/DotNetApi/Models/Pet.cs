@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DotNetApi.Models
@@ -15,8 +16,10 @@ namespace DotNetApi.Models
         public string? Description { get; set; } = string.Empty;
         public string Photo_Path { get; set; } = string.Empty;
 
+        [JsonIgnore]
         public User User { get; set; } = new User();
         public string User_Id { get; set; } = string.Empty;
+        [JsonIgnore]
         public List<UserPet> UserPets { get; set; } = new List<UserPet>();
     }
 }

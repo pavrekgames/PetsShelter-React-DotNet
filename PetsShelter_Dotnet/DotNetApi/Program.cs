@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using DotNetApi.Data;
 using DotNetApi.Interfaces;
 using DotNetApi.Middlewares;
@@ -7,6 +9,7 @@ using DotNetApi.Seeders;
 using DotNetApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -67,7 +70,6 @@ builder.Services.AddScoped<ISickPetRepository, SickPetRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
-
 
 var app = builder.Build();
 
