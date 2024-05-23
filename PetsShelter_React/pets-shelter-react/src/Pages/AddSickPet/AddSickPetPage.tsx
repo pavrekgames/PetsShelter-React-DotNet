@@ -71,8 +71,7 @@ const AddSickPetPage = (props: Props) => {
     formData.append("name", getValues("name"));
     formData.append("species", getValues("species"));
     formData.append("disease", getValues("disease"));
-    formData.append("required_tokens", getValues("required_tokens").toString());
-    formData.append("status", "Aktywne");
+    formData.append("requiredTokens", getValues("required_tokens").toString());
     formData.append("photo", photo);
 
     return formData;

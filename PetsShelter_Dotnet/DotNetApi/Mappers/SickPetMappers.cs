@@ -31,7 +31,9 @@ namespace DotNetApi.Mappers
                 Name = createSickPetDto.Name,
                 Species = createSickPetDto.Species,
                 Disease = createSickPetDto.Disease,
+                CurrentTokens = 0,
                 RequiredTokens = createSickPetDto.RequiredTokens,
+                Status = "Aktywne",
                 PhotoPath = photoPath
             };
         }

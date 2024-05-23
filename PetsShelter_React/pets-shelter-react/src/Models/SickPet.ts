@@ -3,8 +3,8 @@ export interface SickPet{
     name: string;
     species: string;
     disease: string;
-    current_tokens: number;
-    required_tokens: number;
+    currentTokens: number;
+    requiredTokens: number;
     status: string;
-    photo_path: string;
+    photoPath: string;
   }

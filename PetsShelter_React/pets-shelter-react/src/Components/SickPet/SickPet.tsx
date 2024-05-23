@@ -45,7 +45,7 @@ const SickPet = ({ pet }: { pet: SickPetModel }) => {
         <div className="p-4 d-flex flex-row justify-content-center">
           <div className="d-inline">
             <h4 className="text-light">
-              {pet.current_tokens} / {pet.required_tokens} {dollarIcon}
+              {pet.currentTokens} / {pet.requiredTokens} {dollarIcon}
             </h4>
           </div>
         </div>

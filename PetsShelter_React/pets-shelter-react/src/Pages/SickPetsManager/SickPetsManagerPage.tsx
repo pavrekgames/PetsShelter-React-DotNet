@@ -54,74 +54,78 @@ const SickPetsManagerPage = (props: Props) => {
       </div>
 
       <div>
-        <div className="px-6 app-background table-responsive">
-          <table className="table table-striped table-dark table-sm table-bordered text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Zdjęcie</th>
-                <th scope="col">Imię</th>
-                <th scope="col">Gatunek</th>
-                <th scope="col">Choroba</th>
-                <th scope="col">Obecna liczba żetonów</th>
-                <th scope="col">Wymagana liczba żetonów</th>
-                <th scope="col">Status</th>
-                <th scope="col">Akcja</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pets
-                .slice(pagesVisited, pagesVisited + itemsPerPage)
-                .map((pet, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>
-                      <img
-                        src={pet.photo_path}
-                        alt="Pet"
-                        className="img-size-my-pet"
-                      />
-                      <div className="pt-2 ">
-                        <button
-                          type="button"
-                          className="btn btn-info p-2"
-                          onClick={() =>
-                            navigate("/sick-pets-manager/edit-photo/" + pet.id)
-                          }
-                        >
-                          Zmień
-                        </button>
-                      </div>
-                    </td>
-                    <td>{pet.name}</td>
-                    <td>{pet.species}</td>
-                    <td>{pet.disease}</td>
-                    <td>{pet.current_tokens}</td>
-                    <td>{pet.required_tokens}</td>
-                    <td>{pet.status}</td>
-                    <td>
-                      <div className="text-center pt-2">
-                        <button
-                          type="button"
-                          className="btn btn-info"
-                          onClick={() =>
-                            navigate("/sick-pets-manager/edit/" + pet.id)
-                          }
-                        >
-                          Edytuj
-                        </button>
-                      </div>
-                      <div className="text-center pt-2">
-                        <button type="button" className="btn btn-danger">
-                          Usuń
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+        {pets.length > 0 && (
+          <div className="px-6 app-background table-responsive">
+            <table className="table table-striped table-dark table-sm table-bordered text-center">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Zdjęcie</th>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Gatunek</th>
+                  <th scope="col">Choroba</th>
+                  <th scope="col">Obecna liczba żetonów</th>
+                  <th scope="col">Wymagana liczba żetonów</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Akcja</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pets
+                  .slice(pagesVisited, pagesVisited + itemsPerPage)
+                  .map((pet, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <img
+                          src={pet.photoPath}
+                          alt="Pet"
+                          className="img-size-my-pet"
+                        />
+                        <div className="pt-2 ">
+                          <button
+                            type="button"
+                            className="btn btn-info p-2"
+                            onClick={() =>
+                              navigate(
+                                "/sick-pets-manager/edit-photo/" + pet.id
+                              )
+                            }
+                          >
+                            Zmień
+                          </button>
+                        </div>
+                      </td>
+                      <td>{pet.name}</td>
+                      <td>{pet.species}</td>
+                      <td>{pet.disease}</td>
+                      <td>{pet.currentTokens}</td>
+                      <td>{pet.requiredTokens}</td>
+                      <td>{pet.status}</td>
+                      <td>
+                        <div className="text-center pt-2">
+                          <button
+                            type="button"
+                            className="btn btn-info"
+                            onClick={() =>
+                              navigate("/sick-pets-manager/edit/" + pet.id)
+                            }
+                          >
+                            Edytuj
+                          </button>
+                        </div>
+                        <div className="text-center pt-2">
+                          <button type="button" className="btn btn-danger">
+                            Usuń
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="app-background d-flex justify-content-center items-center p-3">
           <ReactPaginate

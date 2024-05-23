@@ -7,12 +7,13 @@ using DotNetApi.Dtos.SickPet;
 using DotNetApi.Interfaces;
 using DotNetApi.Mappers;
 using DotNetApi.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetApi.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/")]
     public class SickPetController : ControllerBase
     {
         private readonly ApplicationDBContext context;
@@ -30,6 +31,7 @@ namespace DotNetApi.Controllers
         }
 
         [HttpGet("sick-pets")]
+        [Authorize]
         public async Task<IActionResult> GetSickPets()
         {
             var pets = await sickPetRepository.GetSickPetsAsync();
@@ -37,7 +39,8 @@ namespace DotNetApi.Controllers
             return Ok(pets);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{sick-pet:int}")]
+        [Authorize]
         public async Task<IActionResult> GetSickPetById([FromRoute] int id)
         {
             var pet = await sickPetRepository.GetSickPetByIdAsync(id);
@@ -51,17 +54,19 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost("add-sick-pet")]
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] CreateSickPetDto petDto)
         {
+            
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
 
             var pet = petDto.ToSickPetFromCreateDto(photoUrlPath);
 
-            await sickPetRepository.CreateAsync(pet);
+            await sickPetRepository.CreateAsync(pet); 
 
-            return CreatedAtAction(nameof(GetSickPetById), new { id = pet.Id }, pet.ToSickPetDto());
+            return Ok("Dodano chore zwierzę");
         }
 
 

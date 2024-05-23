@@ -17,7 +17,6 @@ namespace DotNetApi.Dtos.SickPet
         [MinLength(3, ErrorMessage = "Nazwa choroby musi mieć minimum 3 znaki")]
         public string Disease { get; set; } = string.Empty;
         [Required(ErrorMessage = "Ilość tokenów jest wymagana")]
-        [MinLength(1, ErrorMessage = "Minimalna llość wymaganych żetonów to 1")]
         public int RequiredTokens { get; set; } = 1;
     }
 }
