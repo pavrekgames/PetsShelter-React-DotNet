@@ -54,17 +54,17 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost("add-sick-pet")]
-        [Authorize]
+        
         public async Task<IActionResult> Create([FromForm] CreateSickPetDto petDto)
         {
-            
+
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
 
             var pet = petDto.ToSickPetFromCreateDto(photoUrlPath);
 
-            await sickPetRepository.CreateAsync(pet); 
+            await sickPetRepository.CreateAsync(pet);
 
             return Ok("Dodano chore zwierzę");
         }

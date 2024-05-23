@@ -19,6 +19,7 @@ namespace DotNetApi.Dtos.SickPet
         [MinLength(3, ErrorMessage ="Nazwa choroby musi mieć minimum 3 znaki")]
         public string Disease { get; set; } = string.Empty;
         [Required(ErrorMessage ="Ilość tokenów jest wymagana")]
+        [Range(1, Double.PositiveInfinity, ErrorMessage = "Minimalna wymagana ilość żetonów to 1")]
         public int RequiredTokens {get; set;} = 1;
         [Required(ErrorMessage ="Zdjęcie jest wymagane")]
         public IFormFile Photo { get; set; }
