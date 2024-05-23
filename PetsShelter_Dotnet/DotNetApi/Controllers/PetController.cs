@@ -4,10 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DotNetApi.Data;
 using DotNetApi.Dtos.Pet;
+using DotNetApi.Extensions;
 using DotNetApi.Helpers;
 using DotNetApi.Interfaces;
 using DotNetApi.Mappers;
+using DotNetApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client.Extensions.Msal;
@@ -25,13 +29,21 @@ namespace DotNetApi.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IFilesService filesService;
 
-        public PetController(ApplicationDBContext context, IPetRepository petRepository, ILogger<PetController> logger, IWebHostEnvironment webHostEnvironment, IFilesService filesService)
+        private readonly UserManager<User> userManager;
+
+        public PetController(ApplicationDBContext context,
+          IPetRepository petRepository,
+          ILogger<PetController> logger,
+          IWebHostEnvironment webHostEnvironment,
+          IFilesService filesService,
+          UserManager<User> userManager)
         {
             this.context = context;
             this.petRepository = petRepository;
             this.logger = logger;
             this.webHostEnvironment = webHostEnvironment;
             this.filesService = filesService;
+            this.userManager = userManager;
         }
 
         [HttpGet("newest-pets")]
@@ -54,6 +66,7 @@ namespace DotNetApi.Controllers
         }
 
         [HttpGet("pets-to-adopt/{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetPetById([FromRoute] int id)
         {
             var pet = await petRepository.GetByIdAsync(id);
@@ -69,6 +82,10 @@ namespace DotNetApi.Controllers
         [HttpPost("add-pet")]
         public async Task<IActionResult> Create([FromForm] CreatePetDto petDto)
         {
+
+            /*if(petDto.User_Id != null){
+                return BadRequest("Bad Request: " + petDto.User_Id);
+            } */
 
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
@@ -110,6 +127,20 @@ namespace DotNetApi.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("my-pets")]
+        [Authorize]
+        public async Task<IActionResult> GetMyPets()
+        {
+
+            var userName = User.GetUserName();
+            var authorizedUser = await userManager.FindByNameAsync(userName);
+
+            var pets = await context.Pets.Where(p => p.User_Id == "26c8254f-3f6d-4efc-b9f3-703a086f14f5").ToListAsync();
+
+            return Ok(pets);
+
         }
 
     }

@@ -74,7 +74,7 @@ const AddPetPage = (props: Props) => {
     formData.append("size", getValues("size"));
     formData.append("description", getValues("description"));
     formData.append("photo", photo);
-    formData.append("user_id", userId.toString());
+    formData.append("user_Id", userId.toString());
 
     return formData;
   }
