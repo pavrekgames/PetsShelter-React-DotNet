@@ -53,16 +53,16 @@ namespace DotNetApi.Controllers
             var pets = await context.Pets.OrderByDescending(x => x.Id).Take(3).OrderBy(x => x.Id).ToListAsync();
             var petsDto = pets.Select(s => s.ToPetDto());
 
-            return Ok(pets);
+            return Ok(petsDto);
         }
 
         [HttpGet("pets-to-adopt")]
         public async Task<IActionResult> GetPets()
         {
             var pets = await context.Pets.ToListAsync();
-            var petDto = pets.Select(s => s.ToPetDto());
+            var petsDto = pets.Select(s => s.ToPetDto());
 
-            return Ok(pets);
+            return Ok(petsDto);
         }
 
         [HttpGet("pets-to-adopt/{id:int}")]
