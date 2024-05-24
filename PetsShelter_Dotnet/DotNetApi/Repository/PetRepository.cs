@@ -84,7 +84,7 @@ namespace DotNetApi.Repository
             pet.Race = petDto.Race;
             pet.Size = petDto.Size;
             pet.Description = petDto.Description;
-            pet.User_Id = petDto.User_Id;
+            pet.UserId = petDto.UserId;
 
             await context.SaveChangesAsync();
             return pet;

@@ -10,9 +10,9 @@ namespace DotNetApi.Models
     {
         [JsonIgnore]
         public User User { get; set; } = new User();
-        public string User_Id { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
         [JsonIgnore]
         public Pet Pet { get; set; } = new Pet();
-        public int Pet_Id { get; set; }
+        public int PetId { get; set; }
     }
 }

@@ -53,13 +53,13 @@ namespace DotNetApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("User_Id")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pets");
                 });
@@ -185,15 +185,15 @@ namespace DotNetApi.Migrations
 
             modelBuilder.Entity("DotNetApi.Models.UserPet", b =>
                 {
-                    b.Property<string>("User_Id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Pet_Id")
+                    b.Property<int>("PetId")
                         .HasColumnType("int");
 
-                    b.HasKey("User_Id", "Pet_Id");
+                    b.HasKey("UserId", "PetId");
 
-                    b.HasIndex("Pet_Id");
+                    b.HasIndex("PetId");
 
                     b.ToTable("UserPets");
                 });
@@ -227,13 +227,13 @@ namespace DotNetApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c16c3f28-de21-49dd-90ee-453908d4e3f1",
+                            Id = "4c43dee6-e1f3-4876-a2a1-a7dda9d97527",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ac026cdf-48dc-466d-ba5c-5536a5830f3e",
+                            Id = "04d209fb-723a-42fa-aabe-0b3382a920e2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -349,7 +349,7 @@ namespace DotNetApi.Migrations
                 {
                     b.HasOne("DotNetApi.Models.User", "User")
                         .WithMany("Pets")
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -360,12 +360,12 @@ namespace DotNetApi.Migrations
                 {
                     b.HasOne("DotNetApi.Models.Pet", "Pet")
                         .WithMany("UserPets")
-                        .HasForeignKey("Pet_Id")
+                        .HasForeignKey("PetId")
                         .IsRequired();
 
                     b.HasOne("DotNetApi.Models.User", "User")
                         .WithMany("UserPets")
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("UserId")
                         .IsRequired();
 
                     b.Navigation("Pet");

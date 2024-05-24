@@ -21,7 +21,7 @@ namespace DotNetApi.Mappers
                 Size = pet.Size,
                 Description = pet.Description,
                 Photo_Path = pet.Photo_Path,
-                User_Id = pet.User_Id
+                UserId = pet.UserId
             };
         }
 
@@ -34,7 +34,7 @@ namespace DotNetApi.Mappers
                 Size = createPetDto.Size,
                 Description = createPetDto.Description,
                 Photo_Path = photoPath,
-                User_Id = createPetDto.User_Id
+                UserId = createPetDto.UserId
             };
         }
 

@@ -44,21 +44,21 @@ namespace DotNetApi.Data
             builder.Entity<User>()
             .HasMany(u => u.Pets)
             .WithOne(p => p.User)
-            .HasForeignKey(p => p.User_Id);
+            .HasForeignKey(p => p.UserId);
 
             builder.Entity<UserPet>()
-            .HasKey(x => new{x.User_Id, x.Pet_Id});
+            .HasKey(x => new{x.UserId, x.PetId});
 
             builder.Entity<UserPet>()
             .HasOne(up => up.Pet)
             .WithMany(p => p.UserPets)
-            .HasForeignKey(up => up.Pet_Id)
+            .HasForeignKey(up => up.PetId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<UserPet>()
             .HasOne(up => up.User)
             .WithMany(u => u.UserPets)
-            .HasForeignKey(up => up.User_Id)
+            .HasForeignKey(up => up.UserId)
             .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

@@ -14,6 +14,6 @@ namespace DotNetApi.Dtos.Pet
         public string Size { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public string Photo_Path { get; set; } = string.Empty;
-        public string User_Id { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DotNetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateSickPetsTable : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -193,13 +193,13 @@ namespace DotNetApi.Migrations
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPath = table.Column<string>(name: "Photo_Path", type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(name: "User_Id", type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_AspNetUsers_User_Id",
+                        name: "FK_Pets_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -210,19 +210,19 @@ namespace DotNetApi.Migrations
                 name: "UserPets",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(name: "User_Id", type: "nvarchar(450)", nullable: false),
-                    PetId = table.Column<int>(name: "Pet_Id", type: "int", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserPets", x => new { x.UserId, x.PetId });
                     table.ForeignKey(
-                        name: "FK_UserPets_AspNetUsers_User_Id",
+                        name: "FK_UserPets_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_UserPets_Pets_Pet_Id",
+                        name: "FK_UserPets_Pets_PetId",
                         column: x => x.PetId,
                         principalTable: "Pets",
                         principalColumn: "Id");
@@ -233,8 +233,8 @@ namespace DotNetApi.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ac026cdf-48dc-466d-ba5c-5536a5830f3e", null, "User", "USER" },
-                    { "c16c3f28-de21-49dd-90ee-453908d4e3f1", null, "Admin", "ADMIN" }
+                    { "04d209fb-723a-42fa-aabe-0b3382a920e2", null, "User", "USER" },
+                    { "4c43dee6-e1f3-4876-a2a1-a7dda9d97527", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -277,14 +277,14 @@ namespace DotNetApi.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_User_Id",
+                name: "IX_Pets_UserId",
                 table: "Pets",
-                column: "User_Id");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserPets_Pet_Id",
+                name: "IX_UserPets_PetId",
                 table: "UserPets",
-                column: "Pet_Id");
+                column: "PetId");
         }
 
         /// <inheritdoc />

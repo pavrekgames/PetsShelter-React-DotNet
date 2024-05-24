@@ -18,7 +18,7 @@ namespace DotNetApi.Models
 
         [JsonIgnore]
         public User User { get; set; } = new User();
-        public string User_Id { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
         [JsonIgnore]
         public List<UserPet> UserPets { get; set; } = new List<UserPet>();
     }

@@ -22,7 +22,7 @@ namespace DotNetApi.Dtos.Pet
         [Required(ErrorMessage ="Zdjęcie jest wymagane")]
         public IFormFile Photo { get; set; }
         [Required]
-        public string User_Id { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
 
         public IFormFile GetPhoto()
         {

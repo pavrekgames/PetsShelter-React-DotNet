@@ -82,11 +82,6 @@ namespace DotNetApi.Controllers
         [HttpPost("add-pet")]
         public async Task<IActionResult> Create([FromForm] CreatePetDto petDto)
         {
-
-            /*if(petDto.User_Id != null){
-                return BadRequest("Bad Request: " + petDto.User_Id);
-            } */
-
             string photoName = filesService.UploadPhotoAndGetName(petDto);
 
             string photoUrlPath = String.Format("{0}://{1}{2}/Storage/{3}", Request.Scheme, Request.Host, Request.PathBase, photoName);
@@ -133,16 +128,36 @@ namespace DotNetApi.Controllers
         [Authorize]
         public async Task<IActionResult> GetMyPets()
         {
-
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
 
-            var pets = await context.Pets.Where(p => p.User_Id == authorizedUser.Id).ToListAsync();
+            var pets = await context.Pets.Where(p => p.UserId == authorizedUser.Id).ToListAsync();
             var petDto = pets.Select(s => s.ToPetDto());
 
             return Ok(pets);
-
         }
+
+        [HttpPost("add-saved-pet/{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> SavePet([FromRoute] int id)
+        {
+            var userName = User.GetUserName();
+            var authorizedUser = await userManager.FindByNameAsync(userName);
+
+            var userId = authorizedUser.Id;
+            var petId = id;
+
+            var userPet = new UserPet{
+                UserId = userId,
+                PetId = petId
+            };
+
+            await context.UserPets.AddAsync(userPet);
+            await context.SaveChangesAsync();
+
+            return Ok("Zapisano zwierzę");
+        }
+
 
     }
 }

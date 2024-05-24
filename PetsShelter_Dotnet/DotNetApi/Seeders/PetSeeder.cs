@@ -50,7 +50,7 @@ namespace DotNetApi.Seeders
                     Size = "Mały",
                     Description = "",
                     Photo_Path = "sss",
-                    User_Id = "sss",
+                    UserId = "sss",
                 },
                  new Pet()
                 {
@@ -60,7 +60,7 @@ namespace DotNetApi.Seeders
                     Size = "średni",
                     Description= "Piesek",
                     Photo_Path = "ddd",
-                    User_Id = "ddd",
+                    UserId = "ddd",
                 },
                  new Pet()
                 {
@@ -70,7 +70,7 @@ namespace DotNetApi.Seeders
                     Size = "Duży",
                     Description= "",
                     Photo_Path = "eee",
-                    User_Id = "sss",
+                    UserId = "sss",
                 },
                   new Pet()
                 {
@@ -80,7 +80,7 @@ namespace DotNetApi.Seeders
                     Size = "Mały",
                     Description= "",
                     Photo_Path = "ggg",
-                    User_Id = "ccc",
+                    UserId = "ccc",
                 },
                   new Pet()
                 {
@@ -90,7 +90,7 @@ namespace DotNetApi.Seeders
                     Size = "Mały",
                     Description= "",
                     Photo_Path = "kkk",
-                    User_Id = "ddd",
+                    UserId = "ddd",
                 },
             };
 
