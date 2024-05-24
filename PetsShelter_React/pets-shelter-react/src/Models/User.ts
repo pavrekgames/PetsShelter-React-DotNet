@@ -4,5 +4,5 @@ export interface User{
     surname: string;
     email: string;
     role: string;
-    tokens_count: number;
+    tokens_Count: number;
   }

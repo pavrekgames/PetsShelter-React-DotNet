@@ -20,6 +20,7 @@ namespace DotNetApi.Mappers
                 Race = pet.Race,
                 Size = pet.Size,
                 Description = pet.Description,
+                Photo_Path = pet.Photo_Path,
                 User_Id = pet.User_Id
             };
         }

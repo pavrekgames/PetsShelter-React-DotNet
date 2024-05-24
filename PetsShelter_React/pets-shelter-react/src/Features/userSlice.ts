@@ -3,7 +3,7 @@ import { User } from "../Models/User";
 
 export const userSlice = createSlice({
     name: "user",
-    initialState:  {id: 0, name: "", surname: "", email: "", role: "", tokens_count: 0} as User,
+    initialState:  {id: 0, name: "", surname: "", email: "", role: "", tokens_Count: 0} as User,
     reducers:{
         setUser: (state, action) => {
             state.id = action.payload.id;
@@ -11,7 +11,7 @@ export const userSlice = createSlice({
             state.surname = action.payload.surname;
             state.email = action.payload.email;
             state.role = action.payload.role;
-            state.tokens_count = action.payload.tokens_Count;
+            state.tokens_Count = action.payload.tokens_Count;
         },
         removeUser: (state) => {
             state.id = 0;
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
             state.surname = "";
             state.email = "";
             state.role = "";
-            state.tokens_count = 0;
+            state.tokens_Count = 0;
         }
     }
 });

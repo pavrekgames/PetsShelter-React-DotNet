@@ -91,7 +91,7 @@ const Navbar = () => {
   const loggedTemplate = (
     <>
       <div className="fa-xl pe-3 pt-2 text-dark">
-        {dollarIcon} <b>{loggedUser.tokens_count}</b>
+        {dollarIcon} <b>{loggedUser.tokens_Count}</b>
       </div>
 
       <div className="fa-1x pe-3">

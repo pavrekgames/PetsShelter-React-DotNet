@@ -56,7 +56,7 @@ const UsersPage = (props: Props) => {
                     <td>{user.name}</td>
                     <td>{user.surname}</td>
                     <td>{user.email}</td>
-                    <td>{user.tokens_count}</td>
+                    <td>{user.tokens_Count}</td>
                     <td>
                       <div className="text-center d-inline">
                         <button type="button" className="btn btn-danger">
