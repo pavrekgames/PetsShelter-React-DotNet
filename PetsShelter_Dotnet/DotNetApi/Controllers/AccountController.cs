@@ -170,7 +170,7 @@ namespace DotNetApi.Controllers
             }
             
             await context.SaveChangesAsync();
-            return Ok("Edytowano profil");
+            return Ok("Przelano żetony");
         }
 
 

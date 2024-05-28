@@ -1,12 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 import { SickPet as SickPetModel } from "../../Models/SickPet";
+import { useAppSelector } from "../../App/hooks";
+import api from "../../Api/api";
+import * as alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
 
 type Props = {};
 
 const SickPet = ({ pet }: { pet: SickPetModel }) => {
   const dollarIcon = <FontAwesomeIcon icon={faSackDollar} />;
+
+  const token = useAppSelector((state) => state.token.value);
+  const headers = {
+    Authorization: "Bearer " + token,
+  };
+
+  const [isTokensSent, setIsTokensSent] = useState<boolean>(false);
+  let tokensCount = 0;
+  const id = pet.id;
+
+  useEffect(() => {
+    setIsTokensSent(false);
+  }, [isTokensSent]);
+
+  const setTokensCount = (e) => {
+    tokensCount = e.target.value;
+  }
+
+  const transferTokens = () => {
+
+    api
+    .post(`transfer-tokens/${id}`, {tokens_Count: tokensCount}, { headers })
+    .then((res) => {
+      alertify.success("Przesłano żetony");
+      setIsTokensSent(true);
+      console.log(res.data);
+    })
+    .catch((error) => {
+      alertify.error("Wystąpił problem");
+      console.log(error);
+    });
+
+  }
 
   return (
     <div className="mx-auto row px-7 app-background text-light justify-content-center pb-2 ">
@@ -66,10 +103,11 @@ const SickPet = ({ pet }: { pet: SickPetModel }) => {
               min="1"
               max="1000"
               maxLength={4}
+              onChange={(e) => setTokensCount(e)}
             />
           </div>
           <div className="d-inline ps-1">
-            <button type="button" className="btn btn-warning btn-rounded">
+            <button type="button" className="btn btn-warning btn-rounded" onClick={transferTokens}>
               {" "}
               Wyślij{" "}
             </button>
