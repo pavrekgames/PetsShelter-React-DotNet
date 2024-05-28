@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DotNetApi.Data;
 using DotNetApi.Dtos.Account;
 using DotNetApi.Extensions;
 using DotNetApi.Interfaces;
@@ -21,12 +22,14 @@ namespace DotNetApi.Controllers
         private readonly UserManager<User> userManager;
         private readonly ITokenService tokenService;
         private readonly SignInManager<User> signInManager;
+        private readonly ApplicationDBContext context;
 
-        public AccountController(UserManager<User> userManager,ITokenService tokenService ,SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager,ITokenService tokenService ,SignInManager<User> signInManager, ApplicationDBContext context)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
             this.signInManager = signInManager;
+            this.context = context;
         }
 
         [HttpPost("register")]
@@ -117,6 +120,20 @@ namespace DotNetApi.Controllers
                 }; 
 
             return Ok(user);
+        }
+
+        [HttpPut("edit-profile")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAccount([FromForm] UpdateUserDto userDto){
+
+            var userName = User.GetUserName();
+            var authorizedUser = await userManager.FindByNameAsync(userName);
+
+            authorizedUser.Name = userDto.Name;
+            authorizedUser.Surname = userDto.Surname;
+            
+            await context.SaveChangesAsync();
+            return Ok("Edytowano profil");
         }
 
     }
