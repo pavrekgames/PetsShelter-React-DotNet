@@ -53,7 +53,7 @@ const PetToAdoptPage = (props: Props) => {
   };
 
   const checkLoggedUserPet = () => {
-    if (userId == pet.user_Id) {
+    if (userId == pet.userId) {
       setIsLoggedUserPet(true);
     } else {
       setIsLoggedUserPet(false);

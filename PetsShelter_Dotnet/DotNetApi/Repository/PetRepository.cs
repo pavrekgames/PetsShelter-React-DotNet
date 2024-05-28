@@ -15,10 +15,12 @@ namespace DotNetApi.Repository
     {
 
         private readonly ApplicationDBContext context;
+        private readonly ILogger<PetRepository> logger;
 
-        public PetRepository(ApplicationDBContext context)
+        public PetRepository(ApplicationDBContext context, ILogger<PetRepository> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public async Task<List<Pet>> GetPetsAsync(QueryObject query)
@@ -65,6 +67,8 @@ namespace DotNetApi.Repository
 
         public async Task<Pet> CreateAsync(Pet pet)
         {
+            logger.LogWarning($"User Id during adding pet is {pet.UserId}");
+
             await context.Pets.AddAsync(pet);
             await context.SaveChangesAsync();
             return pet;

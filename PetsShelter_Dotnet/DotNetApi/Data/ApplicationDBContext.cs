@@ -44,7 +44,7 @@ namespace DotNetApi.Data
             builder.Entity<User>()
             .HasMany(u => u.Pets)
             .WithOne(p => p.User)
-            .HasForeignKey(p => p.UserId);
+            .HasForeignKey(p => p.UserId); 
 
             builder.Entity<UserPet>()
             .HasKey(x => new{x.UserId, x.PetId});

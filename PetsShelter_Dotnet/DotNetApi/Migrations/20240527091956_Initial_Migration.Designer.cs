@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240524110148_Initial_Migration")]
+    [Migration("20240527091956_Initial_Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -230,13 +230,13 @@ namespace DotNetApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4c43dee6-e1f3-4876-a2a1-a7dda9d97527",
+                            Id = "45367741-6e4a-48a0-99bb-61beecd66ec0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "04d209fb-723a-42fa-aabe-0b3382a920e2",
+                            Id = "d37036b2-a07f-49de-a773-ff5cdc9897fe",
                             Name = "User",
                             NormalizedName = "USER"
                         });
