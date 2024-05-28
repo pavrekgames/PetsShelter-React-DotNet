@@ -158,7 +158,7 @@ namespace DotNetApi.Controllers
                 await context.SaveChangesAsync();
 
                 if(sickPet.CurrentTokens >= sickPet.RequiredTokens){
-                    sickPet.Status = "Zakonczone";
+                    sickPet.Status = "Zakończone";
                     await context.SaveChangesAsync();
                 }
 
