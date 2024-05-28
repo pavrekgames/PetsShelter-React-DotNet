@@ -140,7 +140,34 @@ namespace DotNetApi.Controllers
         [Authorize]
         public async Task<IActionResult> TransferTokens([FromRoute] int id, [FromBody] TransferTokensDto userDto){
 
-            
+            var userName = User.GetUserName();
+            var authorizedUser = await userManager.FindByNameAsync(userName);
+            var sickPet = await context.SickPets.FirstOrDefaultAsync(x => x.Id == id);
+            var tokensCount = userDto.Tokens_Count;
+
+            if(sickPet.Status == "Zakończone"){
+                return BadRequest("Status akcji zakończony");
+            }
+
+            using var transaction = context.Database.BeginTransaction();
+
+            try
+            {
+                authorizedUser.TokensCount -= tokensCount;
+                sickPet.CurrentTokens += tokensCount;
+                await context.SaveChangesAsync();
+
+                if(sickPet.CurrentTokens >= sickPet.RequiredTokens){
+                    sickPet.Status = "Zakonczone";
+                    await context.SaveChangesAsync();
+                }
+
+                transaction.Commit();
+            }
+            catch (System.Exception)
+            {
+                transaction.Rollback();
+            }
             
             await context.SaveChangesAsync();
             return Ok("Edytowano profil");
