@@ -4,6 +4,8 @@ import { User } from "../../Models/User";
 import { useAppSelector } from "../../App/hooks";
 import api from "../../Api/api";
 import ReactPaginate from "react-paginate";
+import * as alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
 
 type Props = {};
 
@@ -14,19 +16,38 @@ const UsersPage = (props: Props) => {
     Authorization: "Bearer " + token,
   };
 
+  const [isUserDeleted, setIsUserDeleted] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const itemsPerPage = 4;
   const pagesVisited = pageNumber * itemsPerPage;
   const pageCount = Math.ceil(users.length / itemsPerPage);
 
+  let id: string = "";
+
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
   useEffect(() => {
+    setIsUserDeleted(false);
+
     api.get("users", { headers }).then((res) => setUsers(res.data));
-  }, []);
+  }, [isUserDeleted]);
+
+
+  const deleteUser = (userId: string) => {
+
+    id = userId;
+
+    api
+    .delete(`users/delete/${id}`, { headers })
+    .then((res) => {
+      setIsUserDeleted(true);
+      alertify.success("Usunąłeś zwierzę");
+    })
+    .catch(() =>{ alertify.success("Usunąłeś zwierzę")});
+  }
 
   return (
     <>
@@ -59,7 +80,7 @@ const UsersPage = (props: Props) => {
                     <td>{user.tokens_Count}</td>
                     <td>
                       <div className="text-center d-inline">
-                        <button type="button" className="btn btn-danger">
+                        <button type="button" className="btn btn-danger" onClick={() => deleteUser(user.id)}>
                           Usuń
                         </button>
                       </div>
