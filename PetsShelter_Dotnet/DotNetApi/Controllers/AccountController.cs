@@ -124,7 +124,7 @@ namespace DotNetApi.Controllers
 
         [HttpPut("edit-profile")]
         [Authorize]
-        public async Task<IActionResult> UpdateAccount([FromForm] UpdateUserDto userDto){
+        public async Task<IActionResult> UpdateAccount([FromBody] UpdateUserDto userDto){
 
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);

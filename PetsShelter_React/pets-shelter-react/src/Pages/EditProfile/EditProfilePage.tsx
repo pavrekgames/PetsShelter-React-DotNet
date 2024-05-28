@@ -98,7 +98,7 @@ const EditProfilePage = (props: Props) => {
     const formData = getValues();
 
     api
-      .post(`edit-profile`, formData, { headers })
+      .put(`edit-profile`, formData, { headers })
       .then((res) => {
         console.log(res);
         dispatch(setUser(res.data));
