@@ -136,5 +136,16 @@ namespace DotNetApi.Controllers
             return Ok("Edytowano profil");
         }
 
+        [HttpPost("transfer-tokens/{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> TransferTokens([FromRoute] int id, [FromBody] TransferTokensDto userDto){
+
+            
+            
+            await context.SaveChangesAsync();
+            return Ok("Edytowano profil");
+        }
+
+
     }
 }
