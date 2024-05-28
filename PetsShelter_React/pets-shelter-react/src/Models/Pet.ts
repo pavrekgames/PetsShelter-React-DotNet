@@ -6,5 +6,5 @@ export interface Pet{
     size: string;
     description: string;
     photo_Path: string;
-    userId: number;
+    userId: string;
   }

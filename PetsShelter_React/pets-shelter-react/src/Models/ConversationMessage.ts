@@ -3,5 +3,5 @@ export interface ConversationMessage{
     user_name: string;
     user_surname: string;
     date: string;
-    sender_id: number;
+    sender_id: string;
   }
