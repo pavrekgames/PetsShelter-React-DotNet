@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './Users.css'
+import "./Users.css";
 import { User } from "../../Models/User";
 import { useAppSelector } from "../../App/hooks";
 import api from "../../Api/api";
@@ -35,19 +35,19 @@ const UsersPage = (props: Props) => {
     api.get("users", { headers }).then((res) => setUsers(res.data));
   }, [isUserDeleted]);
 
-
   const deleteUser = (userId: string) => {
-
     id = userId;
 
     api
-    .delete(`users/delete/${id}`, { headers })
-    .then((res) => {
-      setIsUserDeleted(true);
-      alertify.success("Usunąłeś zwierzę");
-    })
-    .catch(() =>{ alertify.success("Usunąłeś zwierzę")});
-  }
+      .post(`users/delete`, {id: id}, { headers })
+      .then((res) => {
+        setIsUserDeleted(true);
+        alertify.success("Usunąłeś użytkownika");
+      })
+      .catch(() => {
+        alertify.error("Wystąpił problem");
+      });
+  };
 
   return (
     <>
@@ -80,7 +80,11 @@ const UsersPage = (props: Props) => {
                     <td>{user.tokens_Count}</td>
                     <td>
                       <div className="text-center d-inline">
-                        <button type="button" className="btn btn-danger" onClick={() => deleteUser(user.id)}>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => deleteUser(user.id)}
+                        >
                           Usuń
                         </button>
                       </div>
@@ -91,17 +95,17 @@ const UsersPage = (props: Props) => {
           </table>
 
           <div className="app-background d-flex justify-content-center items-center p-3">
-          <ReactPaginate
-          previousLabel="&laquo;"
-          nextLabel="&raquo;"
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName="paginator"
-          previousLinkClassName="paginator-previous"
-          nextLinkClassName="paginator-next"
-          disabledClassName="paginator-disabled"
-          activeClassName="paginator-active"
-        />
+            <ReactPaginate
+              previousLabel="&laquo;"
+              nextLabel="&raquo;"
+              pageCount={pageCount}
+              onPageChange={changePage}
+              containerClassName="paginator"
+              previousLinkClassName="paginator-previous"
+              nextLinkClassName="paginator-next"
+              disabledClassName="paginator-disabled"
+              activeClassName="paginator-active"
+            />
           </div>
         </div>
       </div>
