@@ -41,14 +41,15 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDBContext>();
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = 
     options.DefaultChallengeScheme = 
+    options.DefaultSignInScheme = 
     options.DefaultForbidScheme = 
     options.DefaultScheme = 
-    options.DefaultSignInScheme = 
     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters

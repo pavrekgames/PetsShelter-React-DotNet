@@ -15,7 +15,7 @@ const AdminRoute = ({ children }: Props) => {
         <Navigate to="/login" state={{ from: location }} replace />
       ) : (
         <>
-          {userRole !== "admin" ? (
+          {userRole !== "Admin" ? (
             <Navigate to="/" state={{ from: location }} replace />
           ) : (
             children

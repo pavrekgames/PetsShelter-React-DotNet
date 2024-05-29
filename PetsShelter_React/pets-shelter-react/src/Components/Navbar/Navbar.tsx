@@ -153,7 +153,7 @@ const Navbar = () => {
             </Link>
           </li>
 
-          {loggedUser.role === "admin" && (
+          {loggedUser.role === "Admin" && (
             <div>
               <li>
                 <hr className="dropdown-divider" />

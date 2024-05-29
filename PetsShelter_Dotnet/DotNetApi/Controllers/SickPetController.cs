@@ -54,6 +54,7 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost("add-sick-pet")]
+        [Authorize(Roles = "Admin")]
         
         public async Task<IActionResult> Create([FromForm] CreateSickPetDto petDto)
         {

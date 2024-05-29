@@ -13,7 +13,7 @@ namespace DotNetApi.Models
   {
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
-    public string Role { get; set; } = "user";
+    public string Role { get; set; } = "User";
     public int TokensCount { get; set; } = 0;
     [JsonIgnore]
     public List<Pet> Pets { get; set; } = new List<Pet>();
