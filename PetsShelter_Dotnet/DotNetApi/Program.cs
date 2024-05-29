@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using DotNetApi.Data;
 using DotNetApi.Interfaces;
+using DotNetApi.Mail;
 using DotNetApi.Middlewares;
 using DotNetApi.Models;
 using DotNetApi.Repository;
@@ -71,6 +72,9 @@ builder.Services.AddScoped<ISickPetRepository, SickPetRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddTransient<IMailService, MailService>();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 var app = builder.Build();
 
