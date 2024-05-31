@@ -173,6 +173,11 @@ namespace DotNetApi.Controllers
             return Ok("Przelano żetony");
         }
 
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto userDto){
+
+            return Ok();
+        }
+
 
     }
 }
