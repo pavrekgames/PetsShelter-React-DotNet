@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DotNetApi.Interfaces;
 using DotNetApi.Mail;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
 namespace DotNetApi.Services
@@ -14,9 +15,9 @@ namespace DotNetApi.Services
 
         private readonly MailSettings mailSettings;
 
-        public MailService(MailSettings mailSettings)
+        public MailService(IOptions<MailSettings> mailSettingsOptions)
         {
-            this.mailSettings = mailSettings;
+            mailSettings = mailSettingsOptions.Value;
         }
 
         public async Task<bool> SendMailAsync(MailData mailData)
