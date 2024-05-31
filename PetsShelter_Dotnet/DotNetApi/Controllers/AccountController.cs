@@ -25,9 +25,9 @@ namespace DotNetApi.Controllers
         private readonly ITokenService tokenService;
         private readonly SignInManager<User> signInManager;
         private readonly ApplicationDBContext context;
-        private readonly MailService mailService;
+        private readonly IMailService mailService;
 
-        public AccountController(UserManager<User> userManager,ITokenService tokenService ,SignInManager<User> signInManager, ApplicationDBContext context, MailService mailService)
+        public AccountController(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager, ApplicationDBContext context, IMailService mailService)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
@@ -83,19 +83,21 @@ namespace DotNetApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto){
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
             var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
 
-            if(user == null) return Unauthorized("Nie istnieje konto o podanym adresie E-mail");
+            if (user == null) return Unauthorized("Nie istnieje konto o podanym adresie E-mail");
 
             var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if(!result.Succeeded) return Unauthorized("E-mail lub hasło są nieprawidłowe");
+            if (!result.Succeeded) return Unauthorized("E-mail lub hasło są nieprawidłowe");
 
             return Ok(
                 new LoggedUserDto
@@ -108,48 +110,52 @@ namespace DotNetApi.Controllers
 
         [HttpPost("me")]
         [Authorize]
-        public async Task<IActionResult> Me(){
+        public async Task<IActionResult> Me()
+        {
 
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
 
             var user = new AuthorizedUserDto
-                {
-                    Id = authorizedUser.Id,
-                    Name = authorizedUser.Name,
-                    Surname = authorizedUser.Surname,
-                    Email = authorizedUser.Email,
-                    Role = authorizedUser.Role,
-                    Tokens_Count = authorizedUser.TokensCount
-                }; 
+            {
+                Id = authorizedUser.Id,
+                Name = authorizedUser.Name,
+                Surname = authorizedUser.Surname,
+                Email = authorizedUser.Email,
+                Role = authorizedUser.Role,
+                Tokens_Count = authorizedUser.TokensCount
+            };
 
             return Ok(user);
         }
 
         [HttpPut("edit-profile")]
         [Authorize]
-        public async Task<IActionResult> UpdateAccount([FromBody] UpdateUserDto userDto){
+        public async Task<IActionResult> UpdateAccount([FromBody] UpdateUserDto userDto)
+        {
 
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
 
             authorizedUser.Name = userDto.Name;
             authorizedUser.Surname = userDto.Surname;
-            
+
             await context.SaveChangesAsync();
             return Ok("Edytowano profil");
         }
 
         [HttpPost("transfer-tokens/{id:int}")]
         [Authorize]
-        public async Task<IActionResult> TransferTokens([FromRoute] int id, [FromBody] TransferTokensDto userDto){
+        public async Task<IActionResult> TransferTokens([FromRoute] int id, [FromBody] TransferTokensDto userDto)
+        {
 
             var userName = User.GetUserName();
             var authorizedUser = await userManager.FindByNameAsync(userName);
             var sickPet = await context.SickPets.FirstOrDefaultAsync(x => x.Id == id);
             var tokensCount = userDto.Tokens_Count;
 
-            if(sickPet.Status == "Zakończone"){
+            if (sickPet.Status == "Zakończone")
+            {
                 return BadRequest("Status akcji zakończony");
             }
 
@@ -161,7 +167,8 @@ namespace DotNetApi.Controllers
                 sickPet.CurrentTokens += tokensCount;
                 await context.SaveChangesAsync();
 
-                if(sickPet.CurrentTokens >= sickPet.RequiredTokens){
+                if (sickPet.CurrentTokens >= sickPet.RequiredTokens)
+                {
                     sickPet.Status = "Zakończone";
                     await context.SaveChangesAsync();
                 }
@@ -172,28 +179,36 @@ namespace DotNetApi.Controllers
             {
                 transaction.Rollback();
             }
-            
+
             await context.SaveChangesAsync();
             return Ok("Przelano żetony");
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto userDto){
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto userDto)
+        {
 
-            User user = context.Users.First(x => x.Name == userDto.Name && x.Email == userDto.Email);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Name == userDto.Name && x.Email == userDto.Email);
 
-            if(user == null){
+            if (user == null)
+            {
                 return BadRequest("Nie ma takiego użytkownika");
             }
 
             string newPassword = "696969";
 
-            await userManager.ChangePasswordAsync(user, user.PasswordHash, newPassword);
-
             MailData mailData = mailService.ResetPasswordMail(newPassword, user);
-            await mailService.SendMailAsync(mailData);
-            
-            return Ok();
+            bool hasMailSended = await mailService.SendMailAsync(mailData);
+
+            if (hasMailSended)
+            {
+                await userManager.ChangePasswordAsync(user, user.PasswordHash, newPassword);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Wystąpił problem z wysłaniem maila");
+            }
         }
 
 

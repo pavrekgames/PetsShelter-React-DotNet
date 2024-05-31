@@ -97,6 +97,10 @@ const ResetPasswordPage = (props: Props) => {
                 <div className="text-danger p-1">{errors.email.message}</div>
               )}
 
+              {errors.root?.message && (
+                <div className="text-danger p-1">{errors.root.message}</div>
+              )}
+
               <div className="text-center m-4">
                 <button type="submit" className="btn btn-warning">
                   Wyślij
