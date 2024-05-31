@@ -7,7 +7,9 @@ using DotNetApi.Data;
 using DotNetApi.Dtos.Account;
 using DotNetApi.Extensions;
 using DotNetApi.Interfaces;
+using DotNetApi.Mail;
 using DotNetApi.Models;
+using DotNetApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +25,15 @@ namespace DotNetApi.Controllers
         private readonly ITokenService tokenService;
         private readonly SignInManager<User> signInManager;
         private readonly ApplicationDBContext context;
+        private readonly MailService mailService;
 
-        public AccountController(UserManager<User> userManager,ITokenService tokenService ,SignInManager<User> signInManager, ApplicationDBContext context)
+        public AccountController(UserManager<User> userManager,ITokenService tokenService ,SignInManager<User> signInManager, ApplicationDBContext context, MailService mailService)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
             this.signInManager = signInManager;
             this.context = context;
+            this.mailService = mailService;
         }
 
         [HttpPost("register")]
@@ -173,8 +177,22 @@ namespace DotNetApi.Controllers
             return Ok("Przelano żetony");
         }
 
+        [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto userDto){
 
+            User user = context.Users.First(x => x.Name == userDto.Name && x.Email == userDto.Email);
+
+            if(user == null){
+                return BadRequest("Nie ma takiego użytkownika");
+            }
+
+            string newPassword = "696969";
+
+            await userManager.ChangePasswordAsync(user, user.PasswordHash, newPassword);
+
+            MailData mailData = mailService.ResetPasswordMail(newPassword, user);
+            await mailService.SendMailAsync(mailData);
+            
             return Ok();
         }
 

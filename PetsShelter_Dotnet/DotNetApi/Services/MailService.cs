@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DotNetApi.Interfaces;
 using DotNetApi.Mail;
+using DotNetApi.Models;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -56,5 +57,20 @@ namespace DotNetApi.Services
                 return false;
             }
         }
+
+
+        public MailData ResetPasswordMail(string newPassword, User user){
+
+            var mailData = new MailData{
+                EmailToId = user.Email,
+                EmailToName = user.Name,
+                EmailSubject = "Resetowanie hasła - Pet Shelter",
+                EmailBody = $"Witaj {user.Name} /n/n Otrzymałeś ten e-mail ponieważ nie pamiętałeś swojego hasła /n/n Twoje nowe hasło: {newPassword} /n/n Pozdrawiam Paweł Śruta"
+            };
+
+            return mailData;
+
+        }
+
     }
 }
