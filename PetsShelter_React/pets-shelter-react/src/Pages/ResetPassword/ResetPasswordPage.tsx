@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
+import api from "../../Api/api";
 
 type Props = {};
 
@@ -24,17 +27,33 @@ const ResetPasswordPage = (props: Props) => {
   const {
     register,
     handleSubmit,
+    getValues,
     setError,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema), mode: "all" });
 
+  const createForm = () => {
+    const formData = new FormData();
+    formData.append("name", getValues("name"));
+    formData.append("email", getValues("email"));
+
+    return formData;
+  }
+
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    try {
-    } catch (error) {
+    const formData = createForm();
+    
+    api.post("reset-password", formData).then((res) => {
+      console.log(res);
+      setHasResetSend(true);
+      alertify.success("Wysłano nowe hasło");
+    })
+    .catch((error) => {
+      alertify.error("Wystąpił problem");
       setError("root", {
-        message: "Nie istnieje konto na powyższe dane!",
+        message: "Nie istnieje konto o podanych danych",
       });
-    }
+    })
   };
 
   const notSendTemplate = (
