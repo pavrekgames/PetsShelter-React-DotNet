@@ -32,6 +32,23 @@ namespace DotNetApi.Controllers
             return Ok(usersDto);
         }
 
+        [HttpGet("pet-owners")]
+        public async Task<IActionResult> GetPetOwners(){
+
+            var users = await (from p in context.Users
+                  join e in context.Pets
+                  on p.Id equals e.UserId
+                  select new { 
+                               Name = p.Name, 
+                               Surname = p.Surname, 
+                               PetName = e.Name, 
+                               PetSpecies = e.Species, 
+                               PetPhoto = e.Photo_Path 
+                  }).ToListAsync();
+
+            return Ok(users);
+        }
+
         [HttpPost("users/delete")]
         [Authorize]
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto userDto)

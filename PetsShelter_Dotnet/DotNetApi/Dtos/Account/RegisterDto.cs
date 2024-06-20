@@ -18,9 +18,6 @@ namespace DotNetApi.Dtos.Account
         [Required(ErrorMessage ="Adres E-mail jest wymagany")]
         [EmailAddress(ErrorMessage ="Wprowadzony E-mail jest niepoprawny")]
         public string Email { get; set; } = string.Empty;
-
-        [Required(ErrorMessage ="Adres E-mail jest wymagane")]
-        [EmailAddress(ErrorMessage ="Wprowadzony E-mail jest niepoprawny")]
         public string UserName { get; set; } = string.Empty;
 
         [Required(ErrorMessage ="Hasło jest wymagane")]
