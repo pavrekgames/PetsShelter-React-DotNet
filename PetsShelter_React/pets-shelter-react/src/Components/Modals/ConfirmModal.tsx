@@ -5,7 +5,7 @@ type Props = {};
 
 const ConfirmModal = ({ title, message, confirmModal, closeModal }) => {
   return (
-    <div className="modal-bgr">
+    <div className="modal-bgr" onClick={() => closeModal(false)}>
       <div className="modal-container">
         <div className="modal-close-btn">
           <button onClick={() => closeModal(false)}>X</button>
